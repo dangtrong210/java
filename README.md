@@ -119,45 +119,6 @@ classDiagram
 └── README.md
 ```
 
-## Biên dịch và chạy
-
-Yêu cầu: trình biên dịch hỗ trợ C++11 trở lên (g++, clang++, MSVC).
-
-```bash
-g++ -std=c++11 -Wall *.cpp -o payroll
-./payroll          # Windows: payroll.exe
-```
-
-## Ví dụ sử dụng đa hình
-
-```cpp
-#include <iostream>
-#include <vector>
-#include "Employee.h"
-#include "SalariedEmployee.h"
-#include "HourlyEmployee.h"
-#include "CommissionEmployee.h"
-#include "BasePlusCommissionEmployee.h"
-
-int main() {
-    std::vector<Employee*> employees;
-    employees.push_back(new SalariedEmployee("An", "Nguyen", "111-11-1111", 800));
-    employees.push_back(new HourlyEmployee("Binh", "Tran", "222-22-2222", 16.75, 45));
-    employees.push_back(new CommissionEmployee("Cuong", "Le", "333-33-3333", 10000, 0.06));
-    employees.push_back(new BasePlusCommissionEmployee("Dung", "Pham", "444-44-4444", 5000, 0.04, 300));
-
-    for (const Employee* e : employees) {
-        e->print();                                   // gọi đa hình
-        std::cout << "Luong tuan: " << e->earnings() << "\n\n";
-    }
-
-    for (Employee* e : employees) delete e;           // destructor ảo trong Employee
-    return 0;
-}
-```
-
-> Lưu ý: khai báo `virtual ~Employee() {}` trong `Employee` để giải phóng đúng đối tượng qua con trỏ lớp cơ sở.
-
 ## Kiến thức áp dụng
 
 - Kế thừa (`public`), lớp cơ sở trừu tượng, hàm thuần ảo.
